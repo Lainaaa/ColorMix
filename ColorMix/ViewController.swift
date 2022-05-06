@@ -24,6 +24,7 @@ class ViewController: UIViewController {
         colorView.layer.borderColor =
            UIColor.black.cgColor
         updateControls()
+        showCodeOfRBG()
     }
 
     @IBAction func updateColor(_ sender: UISwitch) {
@@ -44,6 +45,7 @@ class ViewController: UIViewController {
            blue: blue, alpha: 1)
         colorView.backgroundColor = color
         updateControls()
+        showCodeOfRBG()
     }
     func updateControls() {
         redSlider.isEnabled = redSwitch.isOn
@@ -64,5 +66,12 @@ class ViewController: UIViewController {
         colorView.backgroundColor = UIColor(red: 1, green: 1,
                                             blue: 1, alpha: 1)
         updateControls()
+        showCodeOfRBG()
+    }
+    
+    @IBOutlet weak var showCodeOfRGB: UITextView!
+    @IBAction func showCodeOfRBG(){
+        showCodeOfRGB.text = "Decimal Code (R,G,B) = (\(String(format: "%.f", redSlider.value * 255)), \(String(format: "%.f",greenSlider.value * 255)),\(String(format: "%.f",blueSlider.value * 255)))"
+        
     }
 }
