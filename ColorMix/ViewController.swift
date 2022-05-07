@@ -28,24 +28,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func updateColor(_ sender: UISwitch) {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        if redSwitch.isOn {
-            red = CGFloat(redSlider.value)
-        }
-        
-        if greenSwitch.isOn {
-            green = CGFloat(greenSlider.value)
-        }
-        if blueSwitch.isOn {
-            blue = CGFloat(blueSlider.value)
-        }
-        let color = UIColor(red: red, green: green,
-           blue: blue, alpha: 1)
-        colorView.backgroundColor = color
-        updateControls()
-        showCodeOfRBG()
+        updateColorAndStatus()
     }
     func updateControls() {
         redSlider.isEnabled = redSwitch.isOn
@@ -53,7 +36,7 @@ class ViewController: UIViewController {
         blueSlider.isEnabled = blueSwitch.isOn
     }
     
-    @IBAction func sliderChanged(_ sender: Any) {
+    fileprivate func updateColorAndStatus() {
         var red: CGFloat = 0
         var green: CGFloat = 0
         var blue: CGFloat = 0
@@ -68,10 +51,14 @@ class ViewController: UIViewController {
             blue = CGFloat(blueSlider.value)
         }
         let color = UIColor(red: red, green: green,
-           blue: blue, alpha: 1)
+                            blue: blue, alpha: 1)
         colorView.backgroundColor = color
         updateControls()
         showCodeOfRBG()
+    }
+    
+    @IBAction func sliderChanged(_ sender: Any) {
+        updateColorAndStatus()
     }
     @IBAction func reset(_ sender: Any) {
         redSwitch.isOn = false
@@ -86,11 +73,20 @@ class ViewController: UIViewController {
         showCodeOfRBG()
     }
     
-
-    @IBOutlet weak var showCodeOfRGB: UILabel!
-    
+    @IBOutlet weak var showCodeOfRGB: UITextView!
     @IBAction func showCodeOfRBG(){
-        showCodeOfRGB.numberOfLines = 2
-        showCodeOfRGB.text = "Decimal Code (R,G,B) = (\(String(format: "%.f", redSlider.value * 255)), \(String(format: "%.f",greenSlider.value * 255)),\(String(format: "%.f",blueSlider.value * 255)))"
+        var red: Float = 0
+        var green: Float = 0
+        var blue: Float  = 0
+        if redSwitch.isOn {
+            red = redSlider.value
+        }
+        if greenSwitch.isOn {
+            green = greenSlider.value
+        }
+        if blueSwitch.isOn {
+            blue = blueSlider.value
+        }
+        showCodeOfRGB.text = "Decimal Code(R,G,B) = (\(String(format: "%.f", red * 255)),\(String(format: "%.f",green * 255)),\(String(format: "%.f",blue * 255)))\nHex Code(#RRGGBB) = (\(String(format: "%02X", Int(red * 255))),\(String(format: "%02X", Int(green * 255))),\(String(format: "%02X", Int(blue * 255))))"
     }
 }
